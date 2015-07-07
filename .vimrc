@@ -35,15 +35,13 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'tpope/vim-sensible'
 Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'bling/vim-airline'
-Plugin 'edkolev/promptline.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'PeterRincker/vim-argumentative'
 Plugin 'digitaltoad/vim-jade'
-Plugin 'wavded/vim-stylus'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'scrooloose/nerdtree'
+Plugin 'editorconfig/editorconfig-vim'
 call vundle#end()            " required
 
 set clipboard=unnamed
@@ -129,13 +127,12 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 
 " gui
 
-" set background=dark
+set background=dark
 set t_Co=256
-colo PaperColor
-let g:airline_theme='papercolor'
+" let g:airline_theme='solarized-dark'
 let g:airline#extensions#tabline#enabled = 1
-" colo solarized
-" let g:solarized_termcolors=16
+colo solarized
+let g:solarized_termcolors=256
 
 if has("gui_running")
     set background=dark
@@ -224,3 +221,16 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 map <F5> :NERDTreeToggle<CR>
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+
+let g:javascript_conceal_function   = "ƒ"
+let g:javascript_conceal_null       = "ø"
+let g:javascript_conceal_this       = "@"
+let g:javascript_conceal_return     = "⇚"
+let g:javascript_conceal_undefined  = "¿"
+let g:javascript_conceal_NaN        = "ℕ"
+let g:javascript_conceal_prototype  = "¶"
+let g:javascript_conceal_static     = "•"
+let g:javascript_conceal_super      = "Ω"
+
