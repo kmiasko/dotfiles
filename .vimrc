@@ -3,7 +3,7 @@ set nocompatible
 filetype off
 
 set rtp+=~/vim_config/bundle/Vundle.vim
-set rtp+=~/vim_config/snippets
+set rtp+=/home/kmiasko/vim_config/snipps
 
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
@@ -42,6 +42,8 @@ Plugin 'digitaltoad/vim-jade'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'scrooloose/nerdtree'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'edkolev/promptline.vim'
+Plugin 'moll/vim-node'
 call vundle#end()            " required
 
 set clipboard=unnamed
@@ -94,7 +96,7 @@ set showcmd
 set scrolloff=4
 
 " allow the cursor to go in to "invalid" places
-set virtualedit=all
+set virtualedit=block
 
 " span command-line completions horizontally
 set wildmenu
@@ -136,7 +138,7 @@ let g:solarized_termcolors=256
 
 if has("gui_running")
     set background=dark
-    set guifont=Source\ Code\ Pro,Consolas:h12
+    set guifont=PragmataPro\ 13
 endif
 
 " hide the mouse pointer while typing
@@ -175,7 +177,12 @@ map <leader>l :ll<CR>
 " plugins
 
 " ctrlp
-let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
+" let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
+let g:ctrlp_custom_ignore = {
+  \  'dir':  '\v[\/]\.(git|hg|svn)$',
+  \  'file': '\v\.(exe|so|dll|git)$',
+  \  'link': 'some_bad_symbolic_links',
+  \ }
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_dotfiles = 1
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
@@ -195,6 +202,7 @@ let g:delimitMate_matchpairs = "(:),[:],{:}"
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_less_use_less_lint = 1
 let g:syntastic_html_checkers = []
+let g:syntastic_javascript_checkers = ['eslint']
 
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -211,7 +219,7 @@ let g:ycm_filetype_blacklist = {
       \ 'html' : 1,
       \}
 
-let g:UltiSnipsSnippetsDir = "~/vim_config/snippets/"
+let g:UltiSnipsSnippetsDir = "~/vim_config/snipps/"
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -219,10 +227,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "Easy Align
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-
 map <F5> :NERDTreeToggle<CR>
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 let g:javascript_conceal_function   = "ƒ"
 let g:javascript_conceal_null       = "ø"
@@ -233,4 +240,13 @@ let g:javascript_conceal_NaN        = "ℕ"
 let g:javascript_conceal_prototype  = "¶"
 let g:javascript_conceal_static     = "•"
 let g:javascript_conceal_super      = "Ω"
+
+
+nnoremap <C-left> :vertical resize +5<cr> 
+nnoremap <C-right> :vertical resize -5<cr>
+nnoremap <C-up> :resize +5<cr>
+nnoremap <C-down> :resize -5<cr>
+nnoremap <silent> <right> :bnext<cr>
+nnoremap <silent> <left> :bprev<cr>
+
 
