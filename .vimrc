@@ -1,4 +1,3 @@
-set shell=/usr/bin/zsh
 set nocompatible
 filetype off
 
@@ -7,45 +6,58 @@ set rtp+=/home/kmiasko/vim_config/snipps
 
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'pangloss/vim-javascript'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-fugitive'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'marijnh/tern_for_vim'
 Plugin 'MarcWeber/vim-addon-local-vimrc'
-Plugin 'mattn/emmet-vim'
-Plugin 'othree/html5.vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-surround'
-Plugin 'burnettk/vim-angular'
-Plugin 'matthewsimo/angular-vim-snippets'
-Plugin 'claco/jasmine.vim'
 Plugin 'Markdown'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'hail2u/vim-css3-syntax'
+" Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-sensible'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'bling/vim-airline'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'PeterRincker/vim-argumentative'
-Plugin 'digitaltoad/vim-jade'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'scrooloose/nerdtree'
+Plugin 'rking/ag.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'editorconfig/editorconfig-vim'
-Plugin 'edkolev/promptline.vim'
+Plugin 'othree/html5.vim'
+
+" HTML css
+Plugin 'mattn/emmet-vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'jaxbot/browserlink.vim'
+
+" JS
+Plugin 'claco/jasmine.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'marijnh/tern_for_vim'
+
+" Node
 Plugin 'moll/vim-node'
+
+" Angular
+Plugin 'burnettk/vim-angular'
+Plugin 'matthewsimo/angular-vim-snippets'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'digitaltoad/vim-jade'
 call vundle#end()            " required
 
+set shell=/usr/bin/fish
 set clipboard=unnamed
 
 syntax on
@@ -65,9 +77,6 @@ set wrapscan
 " case but recognizes uppercase if it's specified
 set ignorecase
 set smartcase
-
-" use a forward-slash in paths under win
-set shellslash
 
 " make command line two lines high
 set ch=1
@@ -105,8 +114,8 @@ set wildmenu
 set fillchars=""
 
 " represent tabs as 4 spaces
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 
 " enable search highlighting
 set hlsearch
@@ -119,12 +128,6 @@ set number
 " show preview and help window at bottom
 set splitbelow
 
-" highlight trailing whitespace
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+\%#\@<!$/
-au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-au InsertLeave * match ExtraWhitespace /\s\+$/
-
 " /common
 
 " gui
@@ -136,9 +139,12 @@ let g:airline#extensions#tabline#enabled = 1
 colo solarized
 let g:solarized_termcolors=256
 
+
 if has("gui_running")
     set background=dark
-    set guifont=PragmataPro\ 13
+    " set guifont=PragmataPro\ 11
+	" set guifont=Fira\ Mono\ 11
+	set guifont=Inconsolata\ 12
 endif
 
 " hide the mouse pointer while typing
@@ -231,17 +237,6 @@ map <F5> :NERDTreeToggle<CR>
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-let g:javascript_conceal_function   = "ƒ"
-let g:javascript_conceal_null       = "ø"
-let g:javascript_conceal_this       = "@"
-let g:javascript_conceal_return     = "⇚"
-let g:javascript_conceal_undefined  = "¿"
-let g:javascript_conceal_NaN        = "ℕ"
-let g:javascript_conceal_prototype  = "¶"
-let g:javascript_conceal_static     = "•"
-let g:javascript_conceal_super      = "Ω"
-
-
 nnoremap <C-left> :vertical resize +5<cr> 
 nnoremap <C-right> :vertical resize -5<cr>
 nnoremap <C-up> :resize +5<cr>
@@ -249,4 +244,14 @@ nnoremap <C-down> :resize -5<cr>
 nnoremap <silent> <right> :bnext<cr>
 nnoremap <silent> <left> :bprev<cr>
 
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+
+let g:used_javascript_libs = 'underscore,jquery,angularjs,requirejs'
+nmap <F8> :TagbarToggle<CR>
+
+
+let g:syntastic_csslint_args="--ignore=outline-none,box-sizing"
+
+inoremap jk <ESC>
+nnoremap <leader><space> :nohlsearch<CR>
 

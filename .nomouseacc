@@ -1,0 +1,9 @@
+#!/bin/bash
+#wait for the desktop to settle
+sleep 5
+# turn off mouse acceleration
+# xinput set-prop 10 273 -1
+# turn off mouse acceleration
+xinput set-prop 'Razer DeathAdder' 'Evdev Middle Button Emulation' 0
+xinput set-prop 'Razer DeathAdder' 'Device Accel Profile' -1
+xinput set-prop 'Razer DeathAdder' 'Device Accel Velocity Scaling' 1
