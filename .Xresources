@@ -1,3 +1,4 @@
+! Just testing
 URxvt*termName        : rxvt-256color
 URxvt*loginShell      : true
 URxvt.perl-ext-common : default,matcher,clipboard
