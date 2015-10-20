@@ -68,10 +68,12 @@ URxvt*saveLines: 12000
 URxvt*foreground: #657b83
 URxvt*background: #002b36
 
+URxvt*font: xft:Fura Mono for Powerline Plus Nerd File Types Mono Plus Octicons Plus Pomicons:style=Regular:antialias=true:hinting=true:pixelsize=15
+URxvt*boldFont: xft:Fura Mono for Powerline Plus Nerd File Types Mono Plus Octicons Plus Pomicons:style=Regular:antialias=true:hinting=true:bold:pixelsize=15
 !URxvt*font: xft:PragmataPro:antialias=true:hinting=true:pixelsize=14
 !URxvt*boldFont: xft:PragmataPro:antialias=true:hinting=true:bold:pixelsize=14
-URxvt*font: xft:Inconsolata\-g for Powerline:style=Regular:antialias=true:hinting=true:pixelsize=16
-URxvt*boldFont: xft:Inconsolata\-g for Powerline:style=Bold:antialias=true:hinting=true:bold:pixelsize=16
+!URxvt*font: xft:Inconsolata\-g for Powerline:style=Regular:antialias=true:hinting=true:pixelsize=16
+!URxvt*boldFont: xft:Inconsolata\-g for Powerline:style=Bold:antialias=true:hinting=true:bold:pixelsize=16
 !URxvt*font: xft:Fira Mono:style=Regular:antialias=true:hinting=true:pixelsize=14
 !URxvt*boldFont: xft:Fira Mono:style=Bold:antialias=true:hinting=true:bold:pixelsize=14
 

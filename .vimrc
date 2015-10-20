@@ -1,18 +1,18 @@
+set shell=/usr/bin/zsh
 set nocompatible
 filetype off
+
+set encoding=utf8
 
 set rtp+=~/vim_config/bundle/Vundle.vim
 set rtp+=/home/kmiasko/vim_config/snipps
 
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-fugitive'
-Plugin 'MarcWeber/vim-addon-local-vimrc'
 Plugin 'mhinz/vim-startify'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -21,26 +21,21 @@ Plugin 'tpope/vim-surround'
 Plugin 'Markdown'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-sensible'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'bling/vim-airline'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'PeterRincker/vim-argumentative'
 Plugin 'junegunn/vim-easy-align'
-Plugin 'scrooloose/nerdtree'
 Plugin 'rking/ag.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'editorconfig/editorconfig-vim'
 Plugin 'othree/html5.vim'
+Plugin 'ntpeters/vim-better-whitespace'
 
 " HTML css
 Plugin 'mattn/emmet-vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'hail2u/vim-css3-syntax'
-Plugin 'jaxbot/browserlink.vim'
 
 " JS
 Plugin 'claco/jasmine.vim'
@@ -55,9 +50,17 @@ Plugin 'burnettk/vim-angular'
 Plugin 'matthewsimo/angular-vim-snippets'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'digitaltoad/vim-jade'
+
+" magic
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/neomru.vim'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/vimfiler.vim'
+Plugin 'dbakker/vim-projectroot'
+
+Plugin 'ryanoasis/vim-devicons'
 call vundle#end()            " required
 
-set shell=/usr/bin/fish
 set clipboard=unnamed
 
 syntax on
@@ -128,10 +131,6 @@ set number
 " show preview and help window at bottom
 set splitbelow
 
-" /common
-
-" gui
-
 set background=dark
 set t_Co=256
 " let g:airline_theme='solarized-dark'
@@ -178,20 +177,16 @@ inoremap <C-]> <End>
 " jump to current error with ,l
 map <leader>l :ll<CR>
 
-" /key bindings
-
-" plugins
-
 " ctrlp
 " let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
-let g:ctrlp_custom_ignore = {
-  \  'dir':  '\v[\/]\.(git|hg|svn)$',
-  \  'file': '\v\.(exe|so|dll|git)$',
-  \  'link': 'some_bad_symbolic_links',
-  \ }
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_dotfiles = 1
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+" let g:ctrlp_custom_ignore = {
+"  \  'dir':  '\v[\/]\.(git|hg|svn)$',
+"  \  'file': '\v\.(exe|so|dll|git)$',
+"  \  'link': 'some_bad_symbolic_links',
+"  \ }
+" let g:ctrlp_working_path_mode = 0
+" let g:ctrlp_dotfiles = 1
+" let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 " indent guides
 if has("gui_running")
@@ -233,11 +228,11 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "Easy Align
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-map <F5> :NERDTreeToggle<CR>
+" map <F5> :NERDTreeToggle<CR>
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-nnoremap <C-left> :vertical resize +5<cr> 
+nnoremap <C-left> :vertical resize +5<cr>
 nnoremap <C-right> :vertical resize -5<cr>
 nnoremap <C-up> :resize +5<cr>
 nnoremap <C-down> :resize -5<cr>
@@ -249,9 +244,45 @@ autocmd FileType javascript setlocal omnifunc=tern#Complete
 let g:used_javascript_libs = 'underscore,jquery,angularjs,requirejs'
 nmap <F8> :TagbarToggle<CR>
 
-
 let g:syntastic_csslint_args="--ignore=outline-none,box-sizing"
 
 inoremap jk <ESC>
-nnoremap <leader><space> :nohlsearch<CR>
+
+nmap <F9> :SyntasticToggleMode<CR>
+
+let g:better_whitespace_filetypes_blacklist = ['vimfiler']
+autocmd FileType vimfiler match ExtraWhiteSpace ''
+
+let g:airline_powerline_fonts = 1
+
+let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_ignore_pattern = '^\%(.git\|.idea\|.DS_Store\)$'
+
+noremap <silent> <F5> :VimFilerExplorer<CR>
+" Unite
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>t :<C-u>Unite -buffer-name=files -auto-resize -start-insert file_rec/async:!<cr>
+nnoremap <leader>ts :<C-u>Unite file_rec/async -default-action=split<cr>
+nnoremap <leader>tv :<C-u>Unite file_rec/async -default-action=vsplit<cr>
+nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
+nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+	let g:unite_split_rule = 'botright'
+	let g:unite_source_grep_command='ag'
+	let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
+	let g:unite_source_grep_recursive_opt=''
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+	imap <buffer> jk   <Plug>(unite_exit)
+	imap <buffer> <Esc>     <Plug>(unite_exit)
+
+endfunction
+
 
