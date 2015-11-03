@@ -14,13 +14,12 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'mhinz/vim-startify'
 Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-surround'
 Plugin 'Markdown'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'airblade/vim-gitgutter'
+" Plugin 'airblade/vim-gitgutter'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'bling/vim-airline'
 Plugin 'Lokaltog/vim-easymotion'
@@ -30,6 +29,7 @@ Plugin 'rking/ag.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'othree/html5.vim'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'honza/vim-snippets'
 
 " HTML css
 Plugin 'mattn/emmet-vim'
@@ -49,6 +49,10 @@ Plugin 'burnettk/vim-angular'
 Plugin 'matthewsimo/angular-vim-snippets'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'digitaltoad/vim-jade'
+
+let g:angular_find_ignore = ['build/', 'dist/']
+let g:angular_filename_convention = 'camelcased'
+
 
 " magic
 Plugin 'Shougo/vimproc.vim'
@@ -115,7 +119,6 @@ set wildmenu
 " get rid of the characters in window separators
 set fillchars=""
 
-" represent tabs as 4 spaces
 set tabstop=2
 set shiftwidth=2
 
@@ -244,6 +247,8 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,requirejs'
 nmap <F8> :TagbarToggle<CR>
 
 let g:syntastic_csslint_args="--ignore=outline-none,box-sizing"
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+
 
 inoremap jk <ESC>
 
@@ -284,4 +289,4 @@ function! s:unite_settings()
 
 endfunction
 
-
+set expandtab
