@@ -14,7 +14,8 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'mhinz/vim-startify'
 Plugin 'SirVer/ultisnips'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'chriskempson/base16-vim'
+
 Plugin 'tpope/vim-surround'
 Plugin 'Markdown'
 Plugin 'tomtom/tcomment_vim'
@@ -30,6 +31,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'othree/html5.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'honza/vim-snippets'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 
 " HTML css
 Plugin 'mattn/emmet-vim'
@@ -44,22 +47,36 @@ Plugin 'marijnh/tern_for_vim'
 " Node
 Plugin 'moll/vim-node'
 
-" Angular
-Plugin 'burnettk/vim-angular'
-Plugin 'matthewsimo/angular-vim-snippets'
+" React
+Plugin 'mxw/vim-jsx'
+Plugin 'justinj/vim-react-snippets'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+
+
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'digitaltoad/vim-jade'
 
-let g:angular_find_ignore = ['build/', 'dist/']
-let g:angular_filename_convention = 'camelcased'
-
 
 " magic
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/neomru.vim'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/vimfiler.vim'
-Plugin 'dbakker/vim-projectroot'
+Plugin 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ }
+
+Plugin 'jasoncodes/ctrlp-modified.vim'
+map <Leader>m :CtrlPModified<CR>
+map <Leader>M :CtrlPBranch<CR>
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'tacahiroy/ctrlp-funky'
+
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+
 
 Plugin 'ryanoasis/vim-devicons'
 call vundle#end()            " required
@@ -71,6 +88,10 @@ filetype plugin indent on
 
 " common
 
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-solarized
+"
 " prevent generation of .swp and other gubbins
 set nobackup
 set nowritebackup
@@ -137,15 +158,14 @@ set background=dark
 set t_Co=256
 " let g:airline_theme='solarized-dark'
 let g:airline#extensions#tabline#enabled = 1
-colo solarized
-let g:solarized_termcolors=256
 
 
 if has("gui_running")
     set background=dark
     " set guifont=PragmataPro\ 11
 	" set guifont=Fira\ Mono\ 11
-	set guifont=Inconsolata\ 12
+	" set guifont=Inconsolata\ 12
+  set guifont=Fura\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ Mono\ Plus\ Octicons\ Plus\ Pomicons\ 11
 endif
 
 " hide the mouse pointer while typing
@@ -230,7 +250,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "Easy Align
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-" map <F5> :NERDTreeToggle<CR>
+map <F5> :NERDTreeToggle<CR>
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
@@ -254,39 +274,6 @@ inoremap jk <ESC>
 
 nmap <F9> :SyntasticToggleMode<CR>
 
-let g:better_whitespace_filetypes_blacklist = ['vimfiler']
-autocmd FileType vimfiler match ExtraWhiteSpace ''
-
 let g:airline_powerline_fonts = 1
-
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_ignore_pattern = '^\%(.git\|.idea\|.DS_Store\)$'
-
-noremap <silent> <F5> :VimFilerExplorer<CR>
-" Unite
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <leader>t :<C-u>Unite -buffer-name=files -auto-resize -start-insert file_rec/async:!<cr>
-nnoremap <leader>ts :<C-u>Unite file_rec/async -default-action=split<cr>
-nnoremap <leader>tv :<C-u>Unite file_rec/async -default-action=vsplit<cr>
-nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
-nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
-
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-	let g:unite_split_rule = 'botright'
-	let g:unite_source_grep_command='ag'
-	let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
-	let g:unite_source_grep_recursive_opt=''
-  " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-	imap <buffer> jk   <Plug>(unite_exit)
-	imap <buffer> <Esc>     <Plug>(unite_exit)
-
-endfunction
 
 set expandtab

@@ -1,5 +1,5 @@
 {
-	"extends": "eslint-config-airbnb-es5",
+  "extends": "airbnb/legacy",
   "plugins": [
     "eslint-plugin-angular"
   ],
@@ -8,6 +8,7 @@
     "angular": true
   },
   "rules": {
-    "func-names": 0
+    "func-names": 0,
+    "angular/di": 0
   }
 }
