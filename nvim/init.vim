@@ -1,38 +1,38 @@
 set shell=/usr/bin/zsh
-set nocompatible
 filetype off
 
 set encoding=utf8
 
-set rtp+=~/vim_config/bundle/Vundle.vim
-set rtp+=/home/kmiasko/vim_config/snipps
+let &rtp = &rtp . ',' . '/home/kmiasko/nvim_config/bundle/Vundle.vim' . ',' . '/home/kmiasko/nvim_config/snipps'
+  call vundle#rc('/home/kmiasko/nvim_config/bundle')
 
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'mhinz/vim-startify'
 Plugin 'SirVer/ultisnips'
 Plugin 'chriskempson/base16-vim'
-
 Plugin 'tpope/vim-surround'
 Plugin 'Markdown'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'airblade/vim-gitgutter'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'bling/vim-airline'
-Plugin 'Lokaltog/vim-easymotion'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'PeterRincker/vim-argumentative'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'rking/ag.vim'
-Plugin 'majutsushi/tagbar'
 Plugin 'othree/html5.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+" Plugin 'airblade/vim-gitgutter'
+Plugin 'mhinz/vim-signify'
+Plugin 'tpope/vim-vinegar'
+Plugin 'svermeulen/vim-easyclip'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-obsession'
 
 " HTML css
 Plugin 'mattn/emmet-vim'
@@ -40,9 +40,8 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'hail2u/vim-css3-syntax'
 
 " JS
-Plugin 'claco/jasmine.vim'
+" Plugin 'claco/jasmine.vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'marijnh/tern_for_vim'
 
 " Node
 Plugin 'moll/vim-node'
@@ -55,30 +54,27 @@ Plugin 'tomtom/tlib_vim'
 
 
 Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'digitaltoad/vim-jade'
+" Plugin 'digitaltoad/vim-jade'
 
 
 " magic
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
   \ 'file': '\.so$\|\.dat$|\.DS_Store$'
   \ }
 
-Plugin 'jasoncodes/ctrlp-modified.vim'
-map <Leader>m :CtrlPModified<CR>
-map <Leader>M :CtrlPBranch<CR>
-Plugin 'scrooloose/nerdtree'
-
-Plugin 'tacahiroy/ctrlp-funky'
-
 nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'carlitux/deoplete-ternjs'
 
-Plugin 'ryanoasis/vim-devicons'
+let g:tern_request_timeout = 1
+let g:deoplete#enable_at_startup = 1
+
 call vundle#end()            " required
 
 set clipboard=unnamed
@@ -90,7 +86,8 @@ filetype plugin indent on
 
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-solarized
+
+colorscheme base16-ocean
 "
 " prevent generation of .swp and other gubbins
 set nobackup
@@ -155,17 +152,13 @@ set number
 set splitbelow
 
 set background=dark
-set t_Co=256
-" let g:airline_theme='solarized-dark'
+let g:airline_theme='base16_ocean'
 let g:airline#extensions#tabline#enabled = 1
 
 
 if has("gui_running")
     set background=dark
-    " set guifont=PragmataPro\ 11
-	" set guifont=Fira\ Mono\ 11
-	" set guifont=Inconsolata\ 12
-  set guifont=Fura\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ Mono\ Plus\ Octicons\ Plus\ Pomicons\ 11
+    set guifont=Roboto\ Mono\ 12
 endif
 
 " hide the mouse pointer while typing
@@ -199,17 +192,6 @@ inoremap <C-]> <End>
 " jump to current error with ,l
 map <leader>l :ll<CR>
 
-" ctrlp
-" let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
-" let g:ctrlp_custom_ignore = {
-"  \  'dir':  '\v[\/]\.(git|hg|svn)$',
-"  \  'file': '\v\.(exe|so|dll|git)$',
-"  \  'link': 'some_bad_symbolic_links',
-"  \ }
-" let g:ctrlp_working_path_mode = 0
-" let g:ctrlp_dotfiles = 1
-" let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-
 " indent guides
 if has("gui_running")
     let g:indent_guides_enable_on_vim_startup = 1
@@ -223,9 +205,9 @@ let g:delimitMate_matchpairs = "(:),[:],{:}"
 
 " syntastic
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_less_use_less_lint = 1
 let g:syntastic_html_checkers = []
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_scss_checkers = ['scss_lint']
 
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -261,9 +243,7 @@ nnoremap <C-down> :resize -5<cr>
 nnoremap <silent> <right> :bnext<cr>
 nnoremap <silent> <left> :bprev<cr>
 
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-
-let g:used_javascript_libs = 'underscore,jquery,angularjs,requirejs'
+let g:used_javascript_libs = 'underscore,jquery,react,jasmine,handlebars,requirejs'
 nmap <F8> :TagbarToggle<CR>
 
 let g:syntastic_csslint_args="--ignore=outline-none,box-sizing"

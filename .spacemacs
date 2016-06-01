@@ -25,36 +25,33 @@ values."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
-     emacs-lisp
-     colors
      (git :variables
           git-magit-status-fullscreen t)
      ;; markdown
      org
      (shell :variables
-             shell-default-height full
+             shell-default-height 'full
              shell-default-position 'bottom
              shell-default-shell 'eshell
-             shell-default-term-shell "/usr/bin/zsh -l")
-
+             )
      gtags
      syntax-checking
      version-control
      react
-     colors
-     vim-powerline
      unimpaired
      evil-snipe
      evil-commentary
-     evil-cleverparens
      javascript
      html
+     markdown
+     (eyebrowse :variables eyebrowse-display-help nil)
+     (haskell :variables haskell-enable-shm-support t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '( base16-theme )
+   dotspacemacs-additional-packages '( base16-theme material-theme )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -109,17 +106,14 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(base16-solarized-dark
-                         base16-solarized-light)
+   dotspacemacs-themes '(material)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Fura Mono for Powerline Plus Nerd File Types Mono Plus Octicons Plus Pomicons"
-                               :size 13
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
+   ;; dotspacemacs-default-font '("Fura Mono for Powerline Plus Nerd File Types Mono Plus Octicons Plus Pomicons"
+   dotspacemacs-default-font '("Menlo" :size 16 :weight normal :width normal)
+
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -166,13 +160,10 @@ values."
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
    dotspacemacs-use-ido nil
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
-   dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
-   dotspacemacs-helm-no-header nil
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
-   dotspacemacs-helm-position 'bottom
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
    dotspacemacs-enable-paste-micro-state nil
@@ -247,8 +238,11 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
+  (setq exec-path-from-shell-arguments '("-l"))
   (setq-default git-magit-status-fullscreen t)
+  (setq-default dotspacemacs-smooth-scrolling nil)
   )
+
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -262,7 +256,39 @@ layers configuration. You are free to put any user code."
    web-mode-markup-indent-offset 2
    web-mode-css-indent-offset 2
    web-mode-code-indent-offset 2
-   web-mode-attr-indent-offset 2)
+   web-mode-attr-indent-offset 2
+   js-indent-level 2)
+
+   (setq debug-on-error t)
+
+	(when (window-system)
+	(set-default-font "Fira Code"))
+	(let ((alist '((33 . ".\\(?:\\(?:==\\)\\|[!=]\\)")
+		       (35 . ".\\(?:[(?[_{]\\)")
+		       (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
+		       (42 . ".\\(?:\\(?:\\*\\*\\)\\|[*/]\\)")
+		       (43 . ".\\(?:\\(?:\\+\\+\\)\\|\\+\\)")
+		       (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
+		       (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=]\\)")
+		       (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
+		       (58 . ".\\(?:[:=]\\)")
+		       (59 . ".\\(?:;\\)")
+		       (60 . ".\\(?:\\(?:!--\\)\\|\\(?:\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[/<=>|-]\\)")
+		       (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
+		       (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
+		       (63 . ".\\(?:[:=?]\\)")
+		       (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
+		       (94 . ".\\(?:=\\)")
+		       (123 . ".\\(?:-\\)")
+		       (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
+		       (126 . ".\\(?:[=@~-]\\)")
+		     )
+	      ))
+	(dolist (char-regexp alist)
+	  (set-char-table-range composition-function-table (car char-regexp)
+		                `([,(cdr char-regexp) 0 font-shape-gstring]))))
+
+  (setq tern-command '("/home/kmiasko/.nvm/versions/node/v5.6.0/bin/tern"))
 
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
@@ -270,14 +296,11 @@ layers configuration. You are free to put any user code."
     (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
 
   (global-linum-mode)
-  (spacemacs/toggle-evil-cleverparens-on)
   '(version-control :variables
                     version-control-diff-tool 'git-gutter+)
   '(version-control :variables
                     version-control-global-margin t)
 
-(setq-default js2-basic-offset 2)
-(setq-default js-indent-level 2)
 (setq company-etags-everywhere '(html-mode web-mode nxml-mode))
 (eval-after-load 'company
  '(progn
@@ -286,19 +309,23 @@ layers configuration. You are free to put any user code."
 		(if (memq major-mode '(php-mode html-mode web-mode nxml-mode))
 		 (setq ad-return-value nil)
 		 ad-do-it))))
-(custom-set-variables
- '(helm-M-x-fuzzy-match t)
- '(helm-apropos-fuzzy-match t)
- '(helm-completion-in-region-fuzzy-match t)
- '(helm-file-cache-fuzzy-match t)
- '(helm-imenu-fuzzy-match t t)
- '(helm-lisp-fuzzy-completion t)
- '(helm-locate-fuzzy-match t)
- '(helm-mode-fuzzy-match t)
- '(helm-recentf-fuzzy-match t)
- )
 )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (powerline hydra spinner parent-mode helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag pkg-info epl flx evil-jumper iedit anzu highlight s dash ace-jump-helm-line helm helm-core bind-key bind-map smartparens avy package-build evil column-enforce-mode swiper xterm-color web-mode web-beautify toc-org tagedit smeargle slim-mode shm shell-pop scss-mode sass-mode orgit org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets multi-term mmm-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jade-mode htmlize hindent haskell-snippets haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags flycheck-pos-tip flycheck-haskell flycheck eyebrowse evil-snipe evil-magit magit magit-popup git-commit with-editor async evil-commentary eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company-quickhelp pos-tip company-ghc ghc haskell-mode company-cabal company coffee-mode cmm-mode base16-theme auto-yasnippet yasnippet ac-ispell auto-complete material-theme ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package spacemacs-theme spaceline smooth-scrolling smex restart-emacs rainbow-delimiters quelpa projectile popwin popup persp-mode pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery f expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word counsel clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
