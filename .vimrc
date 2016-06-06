@@ -1,6 +1,8 @@
 set shell=/usr/bin/zsh
 filetype off
 
+set encoding=utf8
+
 let &rtp = &rtp . ',' . '/home/kmiasko/nvim_config/bundle/Vundle.vim' . ',' . '/home/kmiasko/nvim_config/snipps'
   call vundle#rc('/home/kmiasko/nvim_config/bundle')
 
@@ -28,34 +30,30 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'airblade/vim-gitgutter'
 Plugin 'mhinz/vim-signify'
 Plugin 'tpope/vim-vinegar'
-Plugin 'dag/vim-fish'
 Plugin 'svermeulen/vim-easyclip'
-
-let g:EasyClipAutoFormat = 1
-
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-obsession'
-Plugin 'nathanaelkane/vim-indent-guides'
 
 " HTML css
 Plugin 'mattn/emmet-vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'hail2u/vim-css3-syntax'
-Plugin 'ap/vim-css-color'
-
 
 " JS
 " Plugin 'claco/jasmine.vim'
 Plugin 'pangloss/vim-javascript'
+
+" Node
 Plugin 'moll/vim-node'
+
+" React
 Plugin 'mxw/vim-jsx'
 Plugin 'justinj/vim-react-snippets'
-Plugin 'othree/javascript-libraries-syntax.vim'
-
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 
 
+Plugin 'othree/javascript-libraries-syntax.vim'
 " Plugin 'digitaltoad/vim-jade'
 
 
@@ -180,17 +178,6 @@ set guioptions=c
 " show/hide current line highlight
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
-autocmd BufNewFile,BufRead *.svg set filetype=xml
-autocmd BufNewFile,BufRead .babelrc set filetype=json
-autocmd BufNewFile,BufRead .jshintrc set filetype=json
-autocmd BufNewFile,BufRead .eslintrc set filetype=json
-autocmd BufNewFile,BufRead *.es6 set filetype=javascript
-
-
-" new
-
-set magic " Set magic on, for regex
-
 
 " /gui
 
@@ -206,10 +193,8 @@ inoremap <C-]> <End>
 map <leader>l :ll<CR>
 
 " indent guides
-if has("gui_running")
-    let g:indent_guides_enable_on_vim_startup = 1
-    let g:indent_guides_color_change_percent = 3
-endif
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_color_change_percent = 3
 
 " delimitMate
 let g:delimitMate_expand_cr = 1
@@ -256,7 +241,7 @@ nnoremap <C-down> :resize -5<cr>
 nnoremap <silent> <right> :bnext<cr>
 nnoremap <silent> <left> :bprev<cr>
 
-let g:used_javascript_libs = 'jquery,react,handlebars,underscore,ramda'
+let g:used_javascript_libs = 'underscore,jquery,react,jasmine,handlebars,requirejs'
 nmap <F8> :TagbarToggle<CR>
 
 let g:syntastic_csslint_args="--ignore=outline-none,box-sizing"
