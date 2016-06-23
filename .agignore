@@ -14,7 +14,6 @@ bower_components
 *.tsv
 *.tmp*
 *.old
-*.json
 *.xml
 *.plist
 *.pdf

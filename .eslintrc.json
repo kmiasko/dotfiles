@@ -1,0 +1,7 @@
+{
+    "extends": "airbnb/legacy",
+    "plugins": [
+        "react",
+        "eslint-plugin-html"
+    ]
+}

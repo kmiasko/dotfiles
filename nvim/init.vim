@@ -30,6 +30,7 @@ Plugin 'mhinz/vim-signify'
 Plugin 'tpope/vim-vinegar'
 Plugin 'dag/vim-fish'
 Plugin 'svermeulen/vim-easyclip'
+Plugin 'Yggdroot/indentLine'
 
 let g:EasyClipAutoFormat = 1
 

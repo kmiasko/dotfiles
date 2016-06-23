@@ -3,9 +3,6 @@
 ;; It must be stored in your home directory.
 
 (defun dotspacemacs/layers ()
-  "Configuration Layers declaration.
-You should not put any user code in this function besides modifying the variable
-values."
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
@@ -23,20 +20,23 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-sort-by-usage t)
      better-defaults
-     (git :variables
-          git-magit-status-fullscreen t)
-     ;; markdown
+     emacs-lisp
+     (git :variables git-magit-status-fullscreen t)
      org
      (shell :variables
              shell-default-height 'full
              shell-default-position 'bottom
-             shell-default-shell 'eshell
-             )
+             shell-default-shell 'eshell)
      gtags
      syntax-checking
      version-control
+     (version-control :variables
+                       version-control-diff-tool 'git-gutter
+                       version-control-global-margin t)
      react
      unimpaired
      evil-snipe
@@ -44,14 +44,13 @@ values."
      javascript
      html
      markdown
-     (eyebrowse :variables eyebrowse-display-help nil)
-     (haskell :variables haskell-enable-shm-support t)
+     theming
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '( base16-theme material-theme )
+   dotspacemacs-additional-packages '(base16-theme)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -93,27 +92,29 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner 'nil
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
-   dotspacemacs-startup-lists '(recents projects)
+   dotspacemacs-startup-lists '(recents bookmarks projects)
    ;; Number of recent files to show in the startup buffer. Ignored if
-   ;; `dotspacemacs-startup-lists' doesn't include `recents'. (default 5)
    dotspacemacs-startup-recent-list-size 5
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(material)
+   dotspacemacs-themes '(base16-ocean-dark)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   ;; dotspacemacs-default-font '("Fura Mono for Powerline Plus Nerd File Types Mono Plus Octicons Plus Pomicons"
-   dotspacemacs-default-font '("Menlo" :size 16 :weight normal :width normal)
 
+   dotspacemacs-default-font '("Operator Mono for Powerline"
+                               :size 15
+                               :weight light
+                               :width normal
+                               :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -160,10 +161,13 @@ values."
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
    dotspacemacs-use-ido nil
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
+   dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
+   dotspacemacs-helm-no-header nil
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
+   dotspacemacs-helm-position 'bottom
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
    dotspacemacs-enable-paste-micro-state nil
@@ -234,83 +238,29 @@ values."
    ))
 
 (defun dotspacemacs/user-init ()
-  "Initialization function for user code.
-It is called immediately after `dotspacemacs/init'.  You are free to put almost
-any user code here.  The exception is org related code, which should be placed
-in `dotspacemacs/user-config'."
   (setq exec-path-from-shell-arguments '("-l"))
   (setq-default git-magit-status-fullscreen t)
-  (setq-default dotspacemacs-smooth-scrolling nil)
-  )
-
+  (setq-default dotspacemacs-smooth-scrolling t))
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration. You are free to put any user code."
   (setq-default
-   ;; js2-mode
    js2-basic-offset 2
-   ;; web-mode
    css-indent-offset 2
    web-mode-markup-indent-offset 2
    web-mode-css-indent-offset 2
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2
-   js-indent-level 2)
-
-   (setq debug-on-error t)
-
-	(when (window-system)
-	(set-default-font "Fira Code"))
-	(let ((alist '((33 . ".\\(?:\\(?:==\\)\\|[!=]\\)")
-		       (35 . ".\\(?:[(?[_{]\\)")
-		       (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-		       (42 . ".\\(?:\\(?:\\*\\*\\)\\|[*/]\\)")
-		       (43 . ".\\(?:\\(?:\\+\\+\\)\\|\\+\\)")
-		       (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-		       (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=]\\)")
-		       (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-		       (58 . ".\\(?:[:=]\\)")
-		       (59 . ".\\(?:;\\)")
-		       (60 . ".\\(?:\\(?:!--\\)\\|\\(?:\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[/<=>|-]\\)")
-		       (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-		       (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-		       (63 . ".\\(?:[:=?]\\)")
-		       (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-		       (94 . ".\\(?:=\\)")
-		       (123 . ".\\(?:-\\)")
-		       (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-		       (126 . ".\\(?:[=@~-]\\)")
-		     )
-	      ))
-	(dolist (char-regexp alist)
-	  (set-char-table-range composition-function-table (car char-regexp)
-		                `([,(cdr char-regexp) 0 font-shape-gstring]))))
-
-  (setq tern-command '("/home/kmiasko/.nvm/versions/node/v5.6.0/bin/tern"))
-
-  (with-eval-after-load 'web-mode
-    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
-
-  (global-linum-mode)
-  '(version-control :variables
-                    version-control-diff-tool 'git-gutter+)
-  '(version-control :variables
-                    version-control-global-margin t)
-
-(setq company-etags-everywhere '(html-mode web-mode nxml-mode))
-(eval-after-load 'company
- '(progn
-	 ;; @see https://github.com/redguardtoo/emacs.d/commit/2ff305c1ddd7faff6dc9fa0869e39f1e9ed1182d
-	 (defadvice company-in-string-or-comment (around company-in-string-or-comment-hack activate)
-		(if (memq major-mode '(php-mode html-mode web-mode nxml-mode))
-		 (setq ad-return-value nil)
-		 ad-do-it))))
-)
-
+   js-indent-level 2
+   powerline-default-separator 'arrow
+   dotspacemacs-line-numbers 'relative
+   tern-command '("/home/kmiasko/.nvm/versions/node/v6.2.0/bin/tern")
+   global-linum-mode
+   '(version-control :variables
+                     version-control-diff-tool 'git-gutter
+                     version-control-global-margin t)
+   flycheck-check-syntax-automatically '(save mode-enabled)
+   projectile-globally-ignored-directories '( "node_modules" "bower_components" ".git" )
+   ))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -321,11 +271,17 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (powerline hydra spinner parent-mode helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag pkg-info epl flx evil-jumper iedit anzu highlight s dash ace-jump-helm-line helm helm-core bind-key bind-map smartparens avy package-build evil column-enforce-mode swiper xterm-color web-mode web-beautify toc-org tagedit smeargle slim-mode shm shell-pop scss-mode sass-mode orgit org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets multi-term mmm-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jade-mode htmlize hindent haskell-snippets haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md ggtags flycheck-pos-tip flycheck-haskell flycheck eyebrowse evil-snipe evil-magit magit magit-popup git-commit with-editor async evil-commentary eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company-quickhelp pos-tip company-ghc ghc haskell-mode company-cabal company coffee-mode cmm-mode base16-theme auto-yasnippet yasnippet ac-ispell auto-complete material-theme ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package spacemacs-theme spaceline smooth-scrolling smex restart-emacs rainbow-delimiters quelpa projectile popwin popup persp-mode pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery f expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word counsel clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link))))
+    (alert dash toc-org async org-download uuidgen livid-mode skewer-mode simple-httpd link-hint evil-visual-mark-mode evil-ediff eshell-z column-enforce-mode popup base16-oceanicnext-theme base16-oceanic-next-theme spacegray-ocean-theme org-plus-contrib packed projectile helm helm-core evil material-theme base16-theme shm hindent haskell-snippets flycheck-haskell company-ghc ghc haskell-mode company-cabal cmm-mode eyebrowse mmm-mode markdown-toc markdown-mode gh-md evil-snipe evil-commentary web-mode web-beautify tagedit slim-mode scss-mode sass-mode less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jade-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data company-tern dash-functional tern coffee-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl flycheck-pos-tip flycheck helm-gtags ggtags xterm-color shell-pop multi-term eshell-prompt-extras esh-help smeargle orgit magit-gitflow helm-gitignore request gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger evil-magit magit magit-popup git-commit with-editor helm-company helm-c-yasnippet company-statistics company-quickhelp pos-tip company auto-yasnippet yasnippet ac-ispell auto-complete window-numbering volatile-highlights vi-tilde-fringe spaceline s powerline smooth-scrolling rainbow-delimiters persp-mode pcre2el paradox hydra spinner open-junk-file neotree move-text lorem-ipsum linum-relative leuven-theme info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-mode-manager helm-make helm-ag google-translate golden-ratio flx-ido fancy-battery expand-region evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-jumper evil-indent-plus evil-iedit-state iedit evil-exchange evil-args evil-anzu anzu eval-sexp-fu highlight define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line avy ws-butler which-key use-package spacemacs-theme restart-emacs quelpa popwin page-break-lines macrostep ido-vertical-mode hl-todo help-fns+ helm-projectile helm-flx helm-descbinds fill-column-indicator exec-path-from-shell evil-visualstar evil-surround evil-escape elisp-slime-nav bind-map auto-compile)))
+ '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
+ '(font-lock-comment-face ((t (:foreground "#65737e" :slant italic))))
+ '(web-mode-html-attr-custom-face ((t (:inherit web-mode-html-attr-name-face :slant italic))))
+ '(web-mode-html-attr-engine-face ((t (:inherit web-mode-block-delimiter-face :slant italic))))
+ '(web-mode-html-attr-equal-face ((t (:inherit web-mode-html-attr-name-face :slant italic))))
+ '(web-mode-html-attr-name-face ((t (:foreground "Snow3" :slant italic)))))

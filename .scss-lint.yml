@@ -1,0 +1,25 @@
+---
+linters:
+  ColorVariable:
+    enabled: false
+  DeclarationOrder:
+    enabled: false
+  EmptyLineBetweenBlocks:
+    enabled: false
+  LeadingZero:
+    enabled: true
+  NestingDepth:
+    enabled: true
+  PropertySortOrder:
+    enabled: false
+  QualifyingElement:
+    enabled: false
+  SelectorFormat:
+    enabled: false
+  Shorthand:
+    enabled: true
+  SpaceBeforeBrace:
+    enabled: true
+  StringQuotes:
+    enabled: true
+
