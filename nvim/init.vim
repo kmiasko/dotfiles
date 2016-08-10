@@ -7,7 +7,8 @@ let &rtp = &rtp . ',' . '/home/kmiasko/nvim_config/bundle/Vundle.vim' . ',' . '/
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'Raimondi/delimitMate'
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
+Plugin 'neomake/neomake'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'SirVer/ultisnips'
 Plugin 'chriskempson/base16-vim'
@@ -31,6 +32,12 @@ Plugin 'tpope/vim-vinegar'
 Plugin 'dag/vim-fish'
 Plugin 'svermeulen/vim-easyclip'
 Plugin 'Yggdroot/indentLine'
+Plugin 'elzr/vim-json'
+Plugin 'othree/html5-syntax.vim'
+
+let g:indentLine_noConcealCursor=""
+
+Plugin 'easymotion/vim-easymotion'
 
 let g:EasyClipAutoFormat = 1
 
@@ -50,9 +57,10 @@ Plugin 'ap/vim-css-color'
 Plugin 'pangloss/vim-javascript'
 Plugin 'moll/vim-node'
 Plugin 'mxw/vim-jsx'
-Plugin 'justinj/vim-react-snippets'
-Plugin 'othree/javascript-libraries-syntax.vim'
 
+let g:jsx_ext_required = 0
+
+Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 
@@ -217,26 +225,18 @@ let g:delimitMate_expand_cr = 1
 let g:delitMate_balance_matchpairs = 1
 let g:delimitMate_matchpairs = "(:),[:],{:}"
 
-" syntastic
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_html_checkers = []
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_scss_checkers = ['scss_lint']
 
-" YouCompleteMe
-let g:ycm_autoclose_preview_window_after_completion = 1
+let g:neomake_javascript_enabled_makers = ['eslint']
+nmap <Leader><Space>o :lopen<CR>      " open location window
+nmap <Leader><Space>c :lclose<CR>     " close location window
+nmap <Leader><Space>, :ll<CR>         " go to current error/warning
+nmap <Leader><Space>n :lnext<CR>      " next error/warning
+nmap <Leader><Space>p :lprev<CR>      " previous error/warning
+
+autocmd! BufWritePost * Neomake
 
 " emmet
 let g:user_emmet_leader_key='<C-e>'
-
-" YCM doesn't play nice with emmet, so disable it for html as a workaround
-let g:ycm_filetype_blacklist = {
-      \ 'notes' : 1,
-      \ 'markdown' : 1,
-      \ 'text' : 1,
-      \ 'unite' : 1,
-      \ 'html' : 1,
-      \}
 
 let g:UltiSnipsSnippetsDir = "~/vim_config/snipps/"
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -260,14 +260,11 @@ nnoremap <silent> <left> :bprev<cr>
 let g:used_javascript_libs = 'jquery,react,handlebars,underscore,ramda'
 nmap <F8> :TagbarToggle<CR>
 
-let g:syntastic_csslint_args="--ignore=outline-none,box-sizing"
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
-
 inoremap jk <ESC>
-
-nmap <F9> :SyntasticToggleMode<CR>
 
 let g:airline_powerline_fonts = 1
 
 set expandtab
+autocmd InsertEnter *.json setlocal conceallevel=2 concealcursor=
+autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=
+

@@ -22,29 +22,21 @@
      ;; ----------------------------------------------------------------
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-sort-by-usage t)
-     better-defaults
-     emacs-lisp
-     (git :variables git-magit-status-fullscreen t)
-     org
-     (shell :variables
-             shell-default-height 'full
-             shell-default-position 'bottom
-             shell-default-shell 'eshell)
-     gtags
-     syntax-checking
      version-control
-     (version-control :variables
-                       version-control-diff-tool 'git-gutter
-                       version-control-global-margin t)
+     gtags
      react
+     evil-cleverparens
      unimpaired
-     evil-snipe
+     (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t)
      evil-commentary
      javascript
      html
      markdown
      theming
+     vinegar
+     git
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -111,7 +103,7 @@ values."
    ;; size to make separators look not too crappy.
 
    dotspacemacs-default-font '("Operator Mono for Powerline"
-                               :size 15
+                               :size 16
                                :weight light
                                :width normal
                                :powerline-scale 1.1)
@@ -238,29 +230,34 @@ values."
    ))
 
 (defun dotspacemacs/user-init ()
-  (setq exec-path-from-shell-arguments '("-l"))
-  (setq-default git-magit-status-fullscreen t)
   (setq-default dotspacemacs-smooth-scrolling t))
+  (add-hook 'react-mode-hook 'emmet-mode)
 
 (defun dotspacemacs/user-config ()
-  (setq-default
-   js2-basic-offset 2
-   css-indent-offset 2
-   web-mode-markup-indent-offset 2
-   web-mode-css-indent-offset 2
-   web-mode-code-indent-offset 2
-   web-mode-attr-indent-offset 2
-   js-indent-level 2
-   powerline-default-separator 'arrow
-   dotspacemacs-line-numbers 'relative
-   tern-command '("/home/kmiasko/.nvm/versions/node/v6.2.0/bin/tern")
-   global-linum-mode
-   '(version-control :variables
-                     version-control-diff-tool 'git-gutter
-                     version-control-global-margin t)
-   flycheck-check-syntax-automatically '(save mode-enabled)
-   projectile-globally-ignored-directories '( "node_modules" "bower_components" ".git" )
-   ))
+ (with-eval-after-load 'web-mode
+  (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
+ (setq-default
+  js2-basic-offset 2
+  css-indent-offset 2
+  web-mode-markup-indent-offset 2
+  web-mode-css-indent-offset 2
+  web-mode-code-indent-offset 2
+  web-mode-attr-indent-offset 2
+  js-indent-level 2
+  powerline-default-separator 'arrow
+  dotspacemacs-line-numbers 'relative
+  tern-command '("/home/kmiasko/.nvm/versions/node/v6.2.0/bin/tern")
+  global-linum-mode
+  '(version-control :variables
+    version-control-diff-tool 'git-gutter
+    version-control-global-margin t)
+  flycheck-check-syntax-automatically '(save mode-enabled)
+  projectile-globally-ignored-directories '( "node_modules" "bower_components" ".git" )
+  magit-repository-directories '("~/workdir/")
+  git-magit-status-fullscreen t)
+  (spacemacs/toggle-evil-cleverparens-on))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -271,7 +268,7 @@ values."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (alert dash toc-org async org-download uuidgen livid-mode skewer-mode simple-httpd link-hint evil-visual-mark-mode evil-ediff eshell-z column-enforce-mode popup base16-oceanicnext-theme base16-oceanic-next-theme spacegray-ocean-theme org-plus-contrib packed projectile helm helm-core evil material-theme base16-theme shm hindent haskell-snippets flycheck-haskell company-ghc ghc haskell-mode company-cabal cmm-mode eyebrowse mmm-mode markdown-toc markdown-mode gh-md evil-snipe evil-commentary web-mode web-beautify tagedit slim-mode scss-mode sass-mode less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jade-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data company-tern dash-functional tern coffee-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl flycheck-pos-tip flycheck helm-gtags ggtags xterm-color shell-pop multi-term eshell-prompt-extras esh-help smeargle orgit magit-gitflow helm-gitignore request gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger evil-magit magit magit-popup git-commit with-editor helm-company helm-c-yasnippet company-statistics company-quickhelp pos-tip company auto-yasnippet yasnippet ac-ispell auto-complete window-numbering volatile-highlights vi-tilde-fringe spaceline s powerline smooth-scrolling rainbow-delimiters persp-mode pcre2el paradox hydra spinner open-junk-file neotree move-text lorem-ipsum linum-relative leuven-theme info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-mode-manager helm-make helm-ag google-translate golden-ratio flx-ido fancy-battery expand-region evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-jumper evil-indent-plus evil-iedit-state iedit evil-exchange evil-args evil-anzu anzu eval-sexp-fu highlight define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line avy ws-butler which-key use-package spacemacs-theme restart-emacs quelpa popwin page-break-lines macrostep ido-vertical-mode hl-todo help-fns+ helm-projectile helm-flx helm-descbinds fill-column-indicator exec-path-from-shell evil-visualstar evil-surround evil-escape elisp-slime-nav bind-map auto-compile)))
+    (evil-cleverparens paredit mwim alert dash toc-org async org-download uuidgen livid-mode skewer-mode simple-httpd link-hint evil-visual-mark-mode evil-ediff eshell-z column-enforce-mode popup base16-oceanicnext-theme base16-oceanic-next-theme spacegray-ocean-theme org-plus-contrib packed projectile helm helm-core evil material-theme base16-theme shm hindent haskell-snippets flycheck-haskell company-ghc ghc haskell-mode company-cabal cmm-mode eyebrowse mmm-mode markdown-toc markdown-mode gh-md evil-snipe evil-commentary web-mode web-beautify tagedit slim-mode scss-mode sass-mode less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jade-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data company-tern dash-functional tern coffee-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl flycheck-pos-tip flycheck helm-gtags ggtags xterm-color shell-pop multi-term eshell-prompt-extras esh-help smeargle orgit magit-gitflow helm-gitignore request gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger evil-magit magit magit-popup git-commit with-editor helm-company helm-c-yasnippet company-statistics company-quickhelp pos-tip company auto-yasnippet yasnippet ac-ispell auto-complete window-numbering volatile-highlights vi-tilde-fringe spaceline s powerline smooth-scrolling rainbow-delimiters persp-mode pcre2el paradox hydra spinner open-junk-file neotree move-text lorem-ipsum linum-relative leuven-theme info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-mode-manager helm-make helm-ag google-translate golden-ratio flx-ido fancy-battery expand-region evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-jumper evil-indent-plus evil-iedit-state iedit evil-exchange evil-args evil-anzu anzu eval-sexp-fu highlight define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line avy ws-butler which-key use-package spacemacs-theme restart-emacs quelpa popwin page-break-lines macrostep ido-vertical-mode hl-todo help-fns+ helm-projectile helm-flx helm-descbinds fill-column-indicator exec-path-from-shell evil-visualstar evil-surround evil-escape elisp-slime-nav bind-map auto-compile)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

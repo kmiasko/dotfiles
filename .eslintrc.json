@@ -1,7 +1,3 @@
 {
-    "extends": "airbnb/legacy",
-    "plugins": [
-        "react",
-        "eslint-plugin-html"
-    ]
+    "extends": "airbnb-base/legacy"
 }
