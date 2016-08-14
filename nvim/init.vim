@@ -57,6 +57,7 @@ Plugin 'ap/vim-css-color'
 Plugin 'pangloss/vim-javascript'
 Plugin 'moll/vim-node'
 Plugin 'mxw/vim-jsx'
+Plugin 'greg-js/vim-react-es6-snippets'
 
 let g:jsx_ext_required = 0
 
@@ -65,6 +66,8 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 
 
+let g:gruvbox_italic=1
+Plugin 'morhetz/gruvbox'
 " Plugin 'digitaltoad/vim-jade'
 
 
@@ -96,9 +99,9 @@ filetype plugin indent on
 " common
 
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-let base16colorspace=256  " Access colors present in 256 colorspace
+" let base16colorspace=256  " Access colors present in 256 colorspace
 
-colorscheme base16-ocean
+colorscheme gruvbox
 "
 " prevent generation of .swp and other gubbins
 set nobackup
@@ -163,7 +166,7 @@ set number
 set splitbelow
 
 set background=dark
-let g:airline_theme='base16_ocean'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 
 
@@ -227,6 +230,8 @@ let g:delimitMate_matchpairs = "(:),[:],{:}"
 
 
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_scss_enabled_makers = ['sasslint']
+
 nmap <Leader><Space>o :lopen<CR>      " open location window
 nmap <Leader><Space>c :lclose<CR>     " close location window
 nmap <Leader><Space>, :ll<CR>         " go to current error/warning
@@ -268,3 +273,4 @@ set expandtab
 autocmd InsertEnter *.json setlocal conceallevel=2 concealcursor=
 autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=
 
+set relativenumber
