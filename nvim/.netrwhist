@@ -1,6 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/home/kmiasko/workdir/carpenter'
 let g:netrw_dirhist_2='/home/kmiasko/workdir/carpenter/src/scss/styles'
 let g:netrw_dirhist_3='/home/kmiasko/workdir/carpenter/src/scss'
 let g:netrw_dirhist_4='/home/kmiasko/workdir/carpenter'
+let g:netrw_dirhist_5='/home/kmiasko/workdir/udacity-dp/ud989-retain'
+let g:netrw_dirhist_6='/home/kmiasko/workdir/udacity-dp/ud989-retain/js'
+let g:netrw_dirhist_7='/home/kmiasko/tmp/winetricks'
+let g:netrw_dirhist_8='/home/kmiasko/workdir/handyman'

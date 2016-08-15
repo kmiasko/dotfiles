@@ -7,18 +7,14 @@ let &rtp = &rtp . ',' . '/home/kmiasko/nvim_config/bundle/Vundle.vim' . ',' . '/
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'Raimondi/delimitMate'
-" Plugin 'scrooloose/syntastic'
 Plugin 'neomake/neomake'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'SirVer/ultisnips'
-Plugin 'chriskempson/base16-vim'
 Plugin 'tpope/vim-surround'
-Plugin 'Markdown'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-commentary.git'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'PeterRincker/vim-argumentative'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'rking/ag.vim'
@@ -26,21 +22,17 @@ Plugin 'othree/html5.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-fugitive'
-" Plugin 'airblade/vim-gitgutter'
-Plugin 'mhinz/vim-signify'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-vinegar'
 Plugin 'dag/vim-fish'
 Plugin 'svermeulen/vim-easyclip'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'tpope/vim-eunuch'
+Plugin 'rbgrouleff/bclose.vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'elzr/vim-json'
 Plugin 'othree/html5-syntax.vim'
-
-let g:indentLine_noConcealCursor=""
-
 Plugin 'easymotion/vim-easymotion'
-
-let g:EasyClipAutoFormat = 1
-
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-obsession'
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -59,35 +51,19 @@ Plugin 'moll/vim-node'
 Plugin 'mxw/vim-jsx'
 Plugin 'greg-js/vim-react-es6-snippets'
 
-let g:jsx_ext_required = 0
-
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 
 
-let g:gruvbox_italic=1
 Plugin 'morhetz/gruvbox'
-" Plugin 'digitaltoad/vim-jade'
-
 
 " magic
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tacahiroy/ctrlp-funky'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-  \ }
-
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'carlitux/deoplete-ternjs'
-
-let g:tern_request_timeout = 1
-let g:deoplete#enable_at_startup = 1
 
 call vundle#end()            " required
 
@@ -251,7 +227,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "Easy Align
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-map <F5> :NERDTreeToggle<CR>
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
@@ -263,7 +238,6 @@ nnoremap <silent> <right> :bnext<cr>
 nnoremap <silent> <left> :bprev<cr>
 
 let g:used_javascript_libs = 'jquery,react,handlebars,underscore,ramda'
-nmap <F8> :TagbarToggle<CR>
 
 inoremap jk <ESC>
 
@@ -274,3 +248,20 @@ autocmd InsertEnter *.json setlocal conceallevel=2 concealcursor=
 autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=
 
 set relativenumber
+
+imap <c-v> <plug>EasyClipInsertModePaste
+
+let g:indentLine_noConcealCursor=""
+let g:EasyClipAutoFormat = 1
+let g:jsx_ext_required = 0
+let g:gruvbox_italic=1
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
+      \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+      \ }
+
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+let g:tern_request_timeout = 1
+let g:deoplete#enable_at_startup = 1
