@@ -1,85 +1,176 @@
 set shell=/usr/bin/zsh
 filetype off
 
+let mapleader = ","
+
 let &rtp = &rtp . ',' . '/home/kmiasko/nvim_config/bundle/Vundle.vim' . ',' . '/home/kmiasko/nvim_config/snipps'
   call vundle#rc('/home/kmiasko/nvim_config/bundle')
 
+set rtp+=~/.fzf
+
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'neomake/neomake'
+
+" Libs
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+
+" General code editing
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'SirVer/ultisnips'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-commentary.git'
 Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'bling/vim-airline'
-Plugin 'PeterRincker/vim-argumentative'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'rking/ag.vim'
-Plugin 'othree/html5.vim'
+Plugin 'wellle/targets.vim'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'tpope/vim-repeat'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'terryma/vim-expand-region'
+Plugin 'sjl/gundo.vim'
+Plugin 'justinmk/vim-sneak'
+
+" Linting
+Plugin 'neomake/neomake'
+Plugin 'benjie/neomake-local-eslint.vim'
+
+" Snippets
+Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+
+" UI
+Plugin 'Yggdroot/indentLine'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'mhartington/oceanic-next'
+Plugin 'Shougo/unite.vim'
+
+let g:oceanic_next_terminal_bold = 1
+
+Plugin 'Konfekt/FastFold'
+Plugin 'rbgrouleff/bclose.vim'
+
+Plugin 'vim-airline/vim-airline'
+let g:airline#extensions#tmuxline#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme='oceanicnext'
+
+Plugin 'edkolev/tmuxline.vim'
+
+" Git
+
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-vinegar'
-Plugin 'dag/vim-fish'
-Plugin 'svermeulen/vim-easyclip'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'tpope/vim-eunuch'
-Plugin 'rbgrouleff/bclose.vim'
-Plugin 'Yggdroot/indentLine'
-Plugin 'elzr/vim-json'
-Plugin 'othree/html5-syntax.vim'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-obsession'
-Plugin 'nathanaelkane/vim-indent-guides'
+
+" Code search / file search
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'junegunn/fzf.vim'
+let g:fzf_nvim_statusline = 0 " disable statusline overwriting
+Plugin 'Shougo/vimfiler.vim'
+let g:vimfiler_as_default_explorer = 1
+Plugin 'mileszs/ack.vim'
+let g:ackprg = 'ag --vimgrep --smart-case'
+cnoreabbrev ag Ack
+cnoreabbrev aG Ack
+cnoreabbrev Ag Ack
+cnoreabbrev AG Ack
 
 " HTML css
 Plugin 'mattn/emmet-vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'ap/vim-css-color'
-
+Plugin 'othree/html5.vim'
+Plugin 'othree/html5-syntax.vim'
 
 " JS
-" Plugin 'claco/jasmine.vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'moll/vim-node'
-Plugin 'mxw/vim-jsx'
-Plugin 'greg-js/vim-react-es6-snippets'
-
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow = 1
+Plugin 'othree/yajs.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
+Plugin 'mxw/vim-jsx'
+Plugin 'epilande/vim-es2015-snippets'
+Plugin 'epilande/vim-react-snippets'
+Plugin 'heavenshell/vim-jsdoc'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'elzr/vim-json'
 
-
-Plugin 'morhetz/gruvbox'
-
-" magic
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tacahiroy/ctrlp-funky'
-
+" Code complete
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'carlitux/deoplete-ternjs'
 
+" Stuff
+Plugin 'metakirby5/codi.vim'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'dag/vim-fish'
+Plugin 'svermeulen/vim-easyclip'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-obsession'
+Plugin 'junegunn/goyo.vim'
+
 call vundle#end()            " required
 
+nnoremap <silent> <c-p> :Files<CR>
+nnoremap <silent> <leader>a :Buffers<CR>
+nnoremap <silent> <leader>A :Windows<CR>
+nnoremap <silent> <leader>; :BLines<CR>
+nnoremap <silent> <leader>o :BTags<CR>
+nnoremap <silent> <leader>O :Tags<CR>
+nnoremap <silent> <leader>? :History<CR>
+nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> <leader>. :AgIn
+
+nnoremap <silent> K :call SearchWordWithAg()<CR>
+vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
+nnoremap <silent> <leader>gl :Commits<CR>
+nnoremap <silent> <leader>ga :BCommits<CR>
+nnoremap <silent> <leader>ft :Filetypes<CR>
+
+imap <C-x><C-f> <plug>(fzf-complete-file-ag)
+imap <C-x><C-l> <plug>(fzf-complete-line)
+
+function! SearchWordWithAg()
+  execute 'Ag' expand('<cword>')
+endfunction
+
+function! SearchVisualSelectionWithAg() range
+  let old_reg = getreg('"')
+  let old_regtype = getregtype('"')
+  let old_clipboard = &clipboard
+  set clipboard&
+  normal! ""gvy
+  let selection = getreg('"')
+  call setreg('"', old_reg, old_regtype)
+  let &clipboard = old_clipboard
+  execute 'Ag' selection
+endfunction
+
+function! SearchWithAgInDirectory(...)
+  call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1}, g:fzf#vim#default_layout))
+endfunction
+command! -nargs=+ -complete=dir AgIn call SearchWithAgInDirectory(<f-args>)
+" }}}
 set clipboard=unnamed
 
 syntax on
 filetype plugin indent on
 
+" For Neovim 0.1.3 and 0.1.4
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+" Or if you have Neovim >= 0.1.5
+" if (has("termguicolors"))
+"  set termguicolors
+" endif
+
+" Theme
+syntax enable
+set background=dark
+colorscheme OceanicNext
 " common
 
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-" let base16colorspace=256  " Access colors present in 256 colorspace
 
-colorscheme gruvbox
-"
-" prevent generation of .swp and other gubbins
 set nobackup
 set nowritebackup
 set noswapfile
@@ -141,16 +232,6 @@ set number
 " show preview and help window at bottom
 set splitbelow
 
-set background=dark
-let g:airline_theme='gruvbox'
-let g:airline#extensions#tabline#enabled = 1
-
-
-if has("gui_running")
-    set background=dark
-    set guifont=Roboto\ Mono\ 12
-endif
-
 " hide the mouse pointer while typing
 set mousehide
 
@@ -175,17 +256,10 @@ autocmd BufNewFile,BufRead .eslintrc set filetype=json
 autocmd BufNewFile,BufRead *.es6 set filetype=javascript
 
 
-" new
-
 set magic " Set magic on, for regex
-
-
-" /gui
 
 " key bindings
 
-" set leader to ,
-let mapleader = ","
 
 " jump to eol in insert mode with C-]
 inoremap <C-]> <End>
@@ -198,12 +272,6 @@ if has("gui_running")
     let g:indent_guides_enable_on_vim_startup = 1
     let g:indent_guides_color_change_percent = 3
 endif
-
-" delimitMate
-let g:delimitMate_expand_cr = 1
-let g:delitMate_balance_matchpairs = 1
-let g:delimitMate_matchpairs = "(:),[:],{:}"
-
 
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_scss_enabled_makers = ['sasslint']
@@ -220,13 +288,9 @@ autocmd! BufWritePost * Neomake
 let g:user_emmet_leader_key='<C-e>'
 
 let g:UltiSnipsSnippetsDir = "~/vim_config/snipps/"
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
-"Easy Align
-vmap <Enter> <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
@@ -241,27 +305,22 @@ let g:used_javascript_libs = 'jquery,react,handlebars,underscore,ramda'
 
 inoremap jk <ESC>
 
-let g:airline_powerline_fonts = 1
-
 set expandtab
 autocmd InsertEnter *.json setlocal conceallevel=2 concealcursor=
 autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=
 
 set relativenumber
 
-imap <c-v> <plug>EasyClipInsertModePaste
-
 let g:indentLine_noConcealCursor=""
-let g:EasyClipAutoFormat = 1
-let g:jsx_ext_required = 0
-let g:gruvbox_italic=1
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
-      \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-      \ }
+" let g:gruvbox_invert_selection = 0
+" let g:gruvbox_italic = 1
+" let g:gruvbox_contrast_dark = 'soft'
 
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-let g:tern_request_timeout = 1
-let g:deoplete#enable_at_startup = 1
+let tern#is_show_argument_hints_enabled=0
+let g:tern_request_timeout=1
+let g:tern_show_signature_in_pum=0
+let g:deoplete#enable_at_startup=1
+let g:tern_show_argument_hints=0
+
+set fileignorecase
+set wildignorecase

@@ -14,23 +14,12 @@ URxvt.clipboard.pastecmd: xsel -ob
 
 URxvt.letterSpace: -1
 
-xft.antialias: 1
-xft.autohint: 0
-xft.dpi: 96
-xft.hinting: 1
-xft.hintstyle: hintfull
-xft.lcdfilter: lcddefault
-xft.rgba: rgb
-
 URxvt.depth:                32
 URxvt.geometry:             160x40
 URxvt.loginshell:           true
 
 URxvt*savelines: 12000
-! URxvt*font: xft:Roboto Mono:style=Regular:antialias=true:hinting=true:pixelsize=15
-! URxvt*boldfont: xft:Roboto Mono:style=Regular:antialias=true:hinting=true:bold:pixelsize=15
-URxvt*font: xft:Fantasque Sans Mono:style=regular:antialias=true:hinting=true:pixelsize=16
-URxvt*boldfont: xft:Fantasque Sans Mono:style=regular:antialias=true:hinting=true:bold:pixelsize=16
+URxvt*font: xft:Iosevka Term Slab,Iosevka Nerd Font:style=Regular,Slab:style=regular:antialias=true:hinting=true:pixelsize=16
 URxvt*scrollstyle: plain
 URxvt.scrollBar: false
 
@@ -41,87 +30,136 @@ URxvt.scrollBar: false
               <key>end:       string("\033[4~")
 *ttymodes: erase ^?
 
-! #define base00 #2b303b
-! #define base01 #343d46
-! #define base02 #4f5b66
-! #define base03 #65737e
-! #define base04 #a7adba
-! #define base05 #c0c5ce
-! #define base06 #dfe1e8
-! #define base07 #eff1f5
-! #define base08 #bf616a
-! #define base09 #d08770
-! #define base0A #ebcb8b
-! #define base0B #a3be8c
-! #define base0C #96b5b4
-! #define base0D #8fa1b3
-! #define base0E #b48ead
-! #define base0F #ab7967
+/* ! hard contrast: *background: #1d2021 */
+/* *background: #282828 */
+/* ! soft contrast: *background: #32302f */
+/* *foreground: #ebdbb2 */
+/* ! Black + DarkGrey */
+/* *color0:  #282828 */
+/* *color8:  #928374 */
+/* ! DarkRed + Red */
+/* *color1:  #cc241d */
+/* *color9:  #fb4934 */
+/* ! DarkGreen + Green */
+/* *color2:  #98971a */
+/* *color10: #b8bb26 */
+/* ! DarkYellow + Yellow */
+/* *color3:  #d79921 */
+/* *color11: #fabd2f */
+/* ! DarkBlue + Blue */
+/* *color4:  #458588 */
+/* *color12: #83a598 */
+/* ! DarkMagenta + Magenta */
+/* *color5:  #b16286 */
+/* *color13: #d3869b */
+/* ! DarkCyan + Cyan */
+/* *color6:  #689d6a */
+/* *color14: #8ec07c */
+/* ! LightGrey + White */
+/* *color7:  #a89984 */
+/* *color15: #ebdbb2 */
 
-! -----------------------------------------------------------------------------
-! File: gruvbox-dark.xresources
-! Description: Retro groove colorscheme generalized
-! Author: morhetz <morhetz@gmail.com>
-! Source: https://github.com/morhetz/gruvbox-generalized
-! Last Modified: 6 Sep 2014
-! -----------------------------------------------------------------------------
+/* URxvt.color24:  #076678 */
+/* URxvt.color66:  #427b58 */
+/* URxvt.color88:  #9d0006 */
+/* URxvt.color96:  #8f3f71 */
+/* URxvt.color100: #79740e */
+/* URxvt.color108: #8ec07c */
+/* URxvt.color109: #83a598 */
+/* URxvt.color130: #af3a03 */
+/* URxvt.color136: #b57614 */
+/* URxvt.color142: #b8bb26 */
+/* URxvt.color167: #fb4934 */
+/* URxvt.color175: #d3869b */
+/* URxvt.color208: #fe8019 */
+/* URxvt.color214: #fabd2f */
+/* URxvt.color223: #ebdbb2 */
+/* URxvt.color228: #f2e5bc */
+/* URxvt.color229: #fbf1c7 */
+/* URxvt.color230: #f9f5d7 */
+/* URxvt.color234: #1d2021 */
+/* URxvt.color235: #282828 */
+/* URxvt.color236: #32302f */
+/* URxvt.color237: #3c3836 */
+/* URxvt.color239: #504945 */
+/* URxvt.color241: #665c54 */
+/* URxvt.color243: #7c6f64 */
+/* URxvt.color244: #928374 */
+/* URxvt.color245: #928374 */
+/* URxvt.color246: #a89984 */
+/* URxvt.color248: #bdae93 */
+/* URxvt.color250: #d5c4a1 */
+!
+! Enabled modi
+rofi.modi:                           window,run,ssh
+! Foreground color
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcddefault
 
-! hard contrast: *background: #1d2021
-*background: #282828
-! soft contrast: *background: #32302f
-*foreground: #ebdbb2
-! Black + DarkGrey
-*color0:  #282828
-*color8:  #928374
-! DarkRed + Red
-*color1:  #cc241d
-*color9:  #fb4934
-! DarkGreen + Green
-*color2:  #98971a
-*color10: #b8bb26
-! DarkYellow + Yellow
-*color3:  #d79921
-*color11: #fabd2f
-! DarkBlue + Blue
-*color4:  #458588
-*color12: #83a598
-! DarkMagenta + Magenta
-*color5:  #b16286
-*color13: #d3869b
-! DarkCyan + Cyan
-*color6:  #689d6a
-*color14: #8ec07c
-! LightGrey + White
-*color7:  #a89984
-*color15: #ebdbb2
+! rofi
+rofi.font: Hack 15
+rofi.width: 100
+rofi.lines: 5
+rofi.columns: 1
+rofi.opacity: 80
+!                    bg       fg      altbg    hlbg     hlfg
+rofi.bw: 0
+rofi.location: 2
+rofi.padding: 100
+rofi.fuzzy: false
 
-URxvt.color24:  #076678
-URxvt.color66:  #427b58
-URxvt.color88:  #9d0006
-URxvt.color96:  #8f3f71
-URxvt.color100: #79740e
-URxvt.color108: #8ec07c
-URxvt.color109: #83a598
-URxvt.color130: #af3a03
-URxvt.color136: #b57614
-URxvt.color142: #b8bb26
-URxvt.color167: #fb4934
-URxvt.color175: #d3869b
-URxvt.color208: #fe8019
-URxvt.color214: #fabd2f
-URxvt.color223: #ebdbb2
-URxvt.color228: #f2e5bc
-URxvt.color229: #fbf1c7
-URxvt.color230: #f9f5d7
-URxvt.color234: #1d2021
-URxvt.color235: #282828
-URxvt.color236: #32302f
-URxvt.color237: #3c3836
-URxvt.color239: #504945
-URxvt.color241: #665c54
-URxvt.color243: #7c6f64
-URxvt.color244: #928374
-URxvt.color245: #928374
-URxvt.color246: #a89984
-URxvt.color248: #bdae93
-URxvt.color250: #d5c4a1
+! Base16 Oceanic Next
+! Scheme: Dmitri Voronianski (http://pixelhunter.me)
+
+#define base00 #1B2B34
+#define base01 #343D46
+#define base02 #4F5B66
+#define base03 #65737E
+#define base04 #A7ADBA
+#define base05 #C0C5CE
+#define base06 #CDD3DE
+#define base07 #D8DEE9
+#define base08 #EC5f67
+#define base09 #F99157
+#define base0A #FAC863
+#define base0B #99C794
+#define base0C #5FB3B3
+#define base0D #6699CC
+#define base0E #C594C5
+#define base0F #AB7967
+
+*.foreground:   base05
+*.background:   base00
+*.cursorColor:  base05
+
+*.color0:       base00
+*.color1:       base08
+*.color2:       base0B
+*.color3:       base0A
+*.color4:       base0D
+*.color5:       base0E
+*.color6:       base0C
+*.color7:       base05
+
+*.color8:       base03
+*.color9:       base08
+*.color10:      base0B
+*.color11:      base0A
+*.color12:      base0D
+*.color13:      base0E
+*.color14:      base0C
+*.color15:      base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*.color16:      base09
+*.color17:      base0F
+*.color18:      base01
+*.color19:      base02
+*.color20:      base04
+*.color21:      base06
