@@ -1,97 +1,33 @@
 ! just testing
 URxvt*termname        : rxvt-256color
 URxvt*loginshell      : true
-URxvt.url-launcher    : /usr/bin/chromium
+URxvt.url-launcher    : /usr/bin/chromium-browser
 URxvt.matcher.button  : 1
 URxvt.scrollbar       : false
-
-URxvt.perl-ext-common: default,clipboard
 URxvt.iso14755: false
 URxvt.keysym.shift-control-c: perl:clipboard:copy
 URxvt.keysym.shift-control-v: perl:clipboard:paste
 URxvt.clipboard.copycmd:  xsel -ib
 URxvt.clipboard.pastecmd: xsel -ob
 
-URxvt.letterSpace: -1
+URxvt.letterSpace: -2
 
 URxvt.depth:                32
 URxvt.geometry:             160x40
 URxvt.loginshell:           true
 
 URxvt*savelines: 12000
-URxvt*font: xft:Iosevka Term Slab,Iosevka Nerd Font:style=Regular,Slab:style=regular:antialias=true:hinting=true:pixelsize=16
+URxvt*font: xft:PragmataProMono Nerd Font:antialias=true:hinting=true:pixelsize=16
 URxvt*scrollstyle: plain
 URxvt.scrollBar: false
 
-*vt100.translations: #override \
-              <key>backspace: string(0x7f)\n\
-              <key>delete:    string("\033[3~")\n\
-              <key>home:      string("\033[1~")\n\
-              <key>end:       string("\033[4~")
-*ttymodes: erase ^?
+! *vt100.translations: #override \
+!              <key>backspace: string(0x7f)\n\
+!              <key>delete:    string("\033[3~")\n\
+!              <key>home:      string("\033[1~")\n\
+!              <key>end:       string("\033[4~")
+! *ttymodes: erase ^?
 
-/* ! hard contrast: *background: #1d2021 */
-/* *background: #282828 */
-/* ! soft contrast: *background: #32302f */
-/* *foreground: #ebdbb2 */
-/* ! Black + DarkGrey */
-/* *color0:  #282828 */
-/* *color8:  #928374 */
-/* ! DarkRed + Red */
-/* *color1:  #cc241d */
-/* *color9:  #fb4934 */
-/* ! DarkGreen + Green */
-/* *color2:  #98971a */
-/* *color10: #b8bb26 */
-/* ! DarkYellow + Yellow */
-/* *color3:  #d79921 */
-/* *color11: #fabd2f */
-/* ! DarkBlue + Blue */
-/* *color4:  #458588 */
-/* *color12: #83a598 */
-/* ! DarkMagenta + Magenta */
-/* *color5:  #b16286 */
-/* *color13: #d3869b */
-/* ! DarkCyan + Cyan */
-/* *color6:  #689d6a */
-/* *color14: #8ec07c */
-/* ! LightGrey + White */
-/* *color7:  #a89984 */
-/* *color15: #ebdbb2 */
-
-/* URxvt.color24:  #076678 */
-/* URxvt.color66:  #427b58 */
-/* URxvt.color88:  #9d0006 */
-/* URxvt.color96:  #8f3f71 */
-/* URxvt.color100: #79740e */
-/* URxvt.color108: #8ec07c */
-/* URxvt.color109: #83a598 */
-/* URxvt.color130: #af3a03 */
-/* URxvt.color136: #b57614 */
-/* URxvt.color142: #b8bb26 */
-/* URxvt.color167: #fb4934 */
-/* URxvt.color175: #d3869b */
-/* URxvt.color208: #fe8019 */
-/* URxvt.color214: #fabd2f */
-/* URxvt.color223: #ebdbb2 */
-/* URxvt.color228: #f2e5bc */
-/* URxvt.color229: #fbf1c7 */
-/* URxvt.color230: #f9f5d7 */
-/* URxvt.color234: #1d2021 */
-/* URxvt.color235: #282828 */
-/* URxvt.color236: #32302f */
-/* URxvt.color237: #3c3836 */
-/* URxvt.color239: #504945 */
-/* URxvt.color241: #665c54 */
-/* URxvt.color243: #7c6f64 */
-/* URxvt.color244: #928374 */
-/* URxvt.color245: #928374 */
-/* URxvt.color246: #a89984 */
-/* URxvt.color248: #bdae93 */
-/* URxvt.color250: #d5c4a1 */
-!
-! Enabled modi
-rofi.modi:                           window,run,ssh
 ! Foreground color
 Xft.dpi: 96
 Xft.antialias: true
@@ -101,65 +37,138 @@ Xft.autohint: false
 Xft.hintstyle: hintfull
 Xft.lcdfilter: lcddefault
 
-! rofi
-rofi.font: Hack 15
-rofi.width: 100
-rofi.lines: 5
-rofi.columns: 1
-rofi.opacity: 80
-!                    bg       fg      altbg    hlbg     hlfg
-rofi.bw: 0
-rofi.location: 2
-rofi.padding: 100
-rofi.fuzzy: false
+! Enabled modi
+rofi.modi:                           window,run,ssh
+/* rofi */
+rofi.bw:              2
+rofi.color-enabled:   true
+rofi.columns:         1
+rofi.eh:              1
+rofi.font:            Hack 12
+rofi.fullscreen:      no
+rofi.hide-scrollbar:  true
+rofi.line-margin:     5
+rofi.lines:           3
+rofi.location:        6
+rofi.padding:         30
+rofi.separator-style: none
+rofi.sidebar-mode:    false
+rofi.terminal:        urxvt
+rofi.width:           1926
+rofi.yoffset:         3
+
+rofi.color-normal: bg, fg, bg, bg, ylw
+rofi.color-urgent: bg, fg, bg, bg, ylw
+rofi.color-active: bg, fg, bg, bg, ylw
+rofi.color-window: bg, #504945, #504945
 
 ! Base16 Oceanic Next
 ! Scheme: Dmitri Voronianski (http://pixelhunter.me)
 
-#define base00 #1B2B34
-#define base01 #343D46
-#define base02 #4F5B66
-#define base03 #65737E
-#define base04 #A7ADBA
-#define base05 #C0C5CE
-#define base06 #CDD3DE
-#define base07 #D8DEE9
-#define base08 #EC5f67
-#define base09 #F99157
-#define base0A #FAC863
-#define base0B #99C794
-#define base0C #5FB3B3
-#define base0D #6699CC
-#define base0E #C594C5
-#define base0F #AB7967
+/* #define base00 #1B2B34 */
+/* #define base01 #343D46 */
+/* #define base02 #4F5B66 */
+/* #define base03 #65737E */
+/* #define base04 #A7ADBA */
+/* #define base05 #C0C5CE */
+/* #define base06 #CDD3DE */
+/* #define base07 #D8DEE9 */
+/* #define base08 #EC5f67 */
+/* #define base09 #F99157 */
+/* #define base0A #FAC863 */
+/* #define base0B #99C794 */
+/* #define base0C #5FB3B3 */
+/* #define base0D #6699CC */
+/* #define base0E #C594C5 */
+/* #define base0F #AB7967 */
 
-*.foreground:   base05
-*.background:   base00
-*.cursorColor:  base05
+/* *.foreground:   base05 */
+/* *.background:   base00 */
+/* *.cursorColor:  base05 */
 
-*.color0:       base00
-*.color1:       base08
-*.color2:       base0B
-*.color3:       base0A
-*.color4:       base0D
-*.color5:       base0E
-*.color6:       base0C
-*.color7:       base05
+/* *.color0:       base00 */
+/* *.color1:       base08 */
+/* *.color2:       base0B */
+/* *.color3:       base0A */
+/* *.color4:       base0D */
+/* *.color5:       base0E */
+/* *.color6:       base0C */
+/* *.color7:       base05 */
 
-*.color8:       base03
-*.color9:       base08
-*.color10:      base0B
-*.color11:      base0A
-*.color12:      base0D
-*.color13:      base0E
-*.color14:      base0C
-*.color15:      base07
+/* *.color8:       base03 */
+/* *.color9:       base08 */
+/* *.color10:      base0B */
+/* *.color11:      base0A */
+/* *.color12:      base0D */
+/* *.color13:      base0E */
+/* *.color14:      base0C */
+/* *.color15:      base07 */
 
-! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
-! use 'shell' template to set these if necessary
-*.color16:      base09
-*.color17:      base0F
-*.color18:      base01
-*.color19:      base02
-*.color20:      base04
-*.color21:      base06
+/* ! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt), */
+/* ! use 'shell' template to set these if necessary */
+/* *.color16:      base09 */
+/* *.color17:      base0F */
+/* *.color18:      base01 */
+/* *.color19:      base02 */
+/* *.color20:      base04 */
+/* *.color21:      base06 */
+
+URxvt.color24:  #076678
+URxvt.color66:  #427b58
+URxvt.color88:  #9d0006
+URxvt.color96:  #8f3f71
+URxvt.color100: #79740e
+URxvt.color108: #8ec07c
+URxvt.color109: #83a598
+URxvt.color130: #af3a03
+URxvt.color136: #b57614
+URxvt.color142: #b8bb26
+URxvt.color167: #fb4934
+URxvt.color175: #d3869b
+URxvt.color208: #fe8019
+URxvt.color214: #fabd2f
+URxvt.color223: #ebdbb2
+URxvt.color228: #f2e5bc
+URxvt.color229: #fbf1c7
+URxvt.color230: #f9f5d7
+URxvt.color234: #1d2021
+URxvt.color235: #282828
+URxvt.color236: #32302f
+URxvt.color237: #3c3836
+URxvt.color239: #504945
+URxvt.color241: #665c54
+URxvt.color243: #7c6f64
+URxvt.color244: #928374
+URxvt.color245: #928374
+URxvt.color246: #a89984
+URxvt.color248: #bdae93
+URxvt.color250: #d5c4a1
+
+! hard contrast: *background: #1d2021
+*background: #282828
+! soft contrast: *background: #32302f
+*foreground: #ebdbb2
+! Black + DarkGrey
+*color0:  #282828
+*color8:  #928374
+! DarkRed + Red
+*color1:  #cc241d
+*color9:  #fb4934
+! DarkGreen + Green
+*color2:  #98971a
+*color10: #b8bb26
+! DarkYellow + Yellow
+*color3:  #d79921
+*color11: #fabd2f
+! DarkBlue + Blue
+*color4:  #458588
+*color12: #83a598
+! DarkMagenta + Magenta
+*color5:  #b16286
+*color13: #d3869b
+! DarkCyan + Cyan
+*color6:  #689d6a
+*color14: #8ec07c
+! LightGrey + White
+*color7:  #a89984
+*color15: #ebdbb2

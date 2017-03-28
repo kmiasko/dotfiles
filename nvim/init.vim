@@ -1,114 +1,200 @@
-set shell=/usr/bin/zsh
+set shell=/bin/bash
+set nocompatible "prevent arrow keys from inserting A B C D
+
 filetype off
 
 let mapleader = ","
 
-let &rtp = &rtp . ',' . '/home/kmiasko/nvim_config/bundle/Vundle.vim' . ',' . '/home/kmiasko/nvim_config/snipps'
-  call vundle#rc('/home/kmiasko/nvim_config/bundle')
-
 set rtp+=~/.fzf
 
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+" call vundle#begin()
+call plug#begin('~/.vim/plugged')
+
+Plug 'morhetz/gruvbox'
 
 " Libs
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
 " General code editing
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-commentary.git'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'wellle/targets.vim'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'tpope/vim-repeat'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'terryma/vim-expand-region'
-Plugin 'sjl/gundo.vim'
-Plugin 'justinmk/vim-sneak'
-
-" Linting
-Plugin 'neomake/neomake'
-Plugin 'benjie/neomake-local-eslint.vim'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-repeat'
+Plug 'neomake/neomake', { 'do': 'npm install --cache-min Infinity --loglevel http -g eslint_d jsonlint' }
 
 " Snippets
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " UI
-Plugin 'Yggdroot/indentLine'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'mhartington/oceanic-next'
-Plugin 'Shougo/unite.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'ryanoasis/vim-devicons'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'vim-airline/vim-airline'
 
-let g:oceanic_next_terminal_bold = 1
 
-Plugin 'Konfekt/FastFold'
-Plugin 'rbgrouleff/bclose.vim'
-
-Plugin 'vim-airline/vim-airline'
 let g:airline#extensions#tmuxline#enabled = 0
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme='oceanicnext'
-
-Plugin 'edkolev/tmuxline.vim'
+let g:airline#extensions#tabline#enabled = 0
+let g:airline_powerline_fonts = 0
+" let g:airline_theme='oceanicnext'
+let g:airline_theme='gruvbox'
 
 " Git
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Code search / file search
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'junegunn/fzf.vim'
-let g:fzf_nvim_statusline = 0 " disable statusline overwriting
-Plugin 'Shougo/vimfiler.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
 let g:vimfiler_as_default_explorer = 1
-Plugin 'mileszs/ack.vim'
-let g:ackprg = 'ag --vimgrep --smart-case'
-cnoreabbrev ag Ack
-cnoreabbrev aG Ack
-cnoreabbrev Ag Ack
-cnoreabbrev AG Ack
+map <leader>f :VimFilerCurrentDir<CR>
 
 " HTML css
-Plugin 'mattn/emmet-vim'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'ap/vim-css-color'
-Plugin 'othree/html5.vim'
-Plugin 'othree/html5-syntax.vim'
+Plug 'mattn/emmet-vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'ap/vim-css-color'
+Plug 'othree/html5.vim'
+Plug 'othree/html5-syntax.vim'
 
 " JS
-Plugin 'pangloss/vim-javascript'
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow = 1
-Plugin 'othree/yajs.vim'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'mxw/vim-jsx'
-Plugin 'epilande/vim-es2015-snippets'
-Plugin 'epilande/vim-react-snippets'
-Plugin 'heavenshell/vim-jsdoc'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'elzr/vim-json'
+" Plug 'pangloss/vim-javascript'
+" Plug 'jelera/vim-javascript-syntax'
+
+
+Plug 'othree/yajs.vim'
+Plug 'othree/es.next.syntax.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'mxw/vim-jsx'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'epilande/vim-react-snippets'
+Plug 'mklabs/jscs.vim', { 'do': 'npm i jscs -g' }
+Plug 'Quramy/vim-js-pretty-template'
+Plug 'jason0x43/vim-js-indent'
+Plug 'elzr/vim-json'
+Plug 'https://github.com/Quramy/tsuquyomi'
+Plug 'othree/jspc.vim'
+
+" TS
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
+
 
 " Code complete
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'carlitux/deoplete-ternjs'
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'ternjs/tern_for_vim',       { 'do': 'npm install --cache-min Infinity --loglevel http' }
+" Plug 'carlitux/deoplete-ternjs',  { 'do': 'npm install --cache-min Infinity --loglevel http -g tern' }
+Plug 'neovim/node-host',          { 'do': 'npm install --cache-min Infinity --loglevel http' }
+Plug 'moll/vim-node'
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+
+set shortmess+=c
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['/home/kmiasko/tmp/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ 'javascript.jsx': ['/home/kmiasko/tmp/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F5> :call LanguageClient_workspace_symbol()<CR>
+nnoremap <silent> <F4> :call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> <F3> :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+
+" redux course
+Plug 'cohama/lexima.vim'
+let g:lexima_enable_basic_rules=1
+let g:lexima_enable_newline_rules=1
+
+Plug 'digitaltoad/vim-pug'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-lastpat'
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-underscore'
+Plug 'machakann/vim-textobj-delimited'
+Plug 'terryma/vim-multiple-cursors'
+
+
+" (Assuming settings like the following)
+set completeopt=longest,menuone,preview
+" let g:deoplete#enable_at_startup=1
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" augroup omnifuncs
+"   autocmd!
+"   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" augroup end
+
+" let deoplete#tag#cache_limit_size = 5000000
+" let g:deoplete#sources = {}
+" let g:deoplete#omni#functions = {}
+" let g:deoplete#sources._ = ['file', 'neosnippet', 'buffer', 'tag']
+" let g:deoplete#sources.elixir = ['alchemist']
+" let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+" let g:deoplete#sources['javascript'] = ['file', 'ultisnips', 'ternjs']
+" let g:deoplete#file#enable_buffer_path = 1
+" let g:deoplete#omni#functions.javascript = [
+"       \ 'tern#Complete',
+"       \ 'jspc#omni',
+"       \]
+" let g:deoplete#omni#functions["javascript.jsx"] = [
+"       \ 'tern#Complete',
+"       \ 'jspc#omni',
+"       \]
+
+" let g:tern#arguments = ['--persistent']
+" let g:tern#command = ['tern']
+" let g:tern_request_timeout=1
+" let g:tern_show_argument_hints = 'on_hold'
+" let g:tern_show_signature_in_pum = 1
+" autocmd FileType javascript setlocal omnifunc=tern#Complete
+" autocmd FileType javascript.jsx setlocal omnifunc=tern#Complete
 
 " Stuff
-Plugin 'metakirby5/codi.vim'
-Plugin 'wakatime/vim-wakatime'
-Plugin 'dag/vim-fish'
-Plugin 'svermeulen/vim-easyclip'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-obsession'
-Plugin 'junegunn/goyo.vim'
+Plug 'dag/vim-fish'
+Plug 'svermeulen/vim-easyclip'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-obsession'
 
-call vundle#end()            " required
+" Elixir
+Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim'
+
+call plug#end()
+
+" close the preview window when you're not using it
+let g:SuperTabClosePreviewOnPopupClose = 1
+" or just disable the preview entirely
+set completeopt-=preview
+let g:UltiSnipsExpandTrigger        = "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger   = "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpBackwardTrigger  = "<Plug>(ultisnips_backward)"
+let g:UltiSnipsListSnippets         = "<Plug>(ultisnips_list)"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
 nnoremap <silent> <c-p> :Files<CR>
 nnoremap <silent> <leader>a :Buffers<CR>
@@ -129,47 +215,42 @@ nnoremap <silent> <leader>ft :Filetypes<CR>
 imap <C-x><C-f> <plug>(fzf-complete-file-ag)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 
-function! SearchWordWithAg()
-  execute 'Ag' expand('<cword>')
-endfunction
-
-function! SearchVisualSelectionWithAg() range
-  let old_reg = getreg('"')
-  let old_regtype = getregtype('"')
-  let old_clipboard = &clipboard
-  set clipboard&
-  normal! ""gvy
-  let selection = getreg('"')
-  call setreg('"', old_reg, old_regtype)
-  let &clipboard = old_clipboard
-  execute 'Ag' selection
-endfunction
-
 function! SearchWithAgInDirectory(...)
   call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1}, g:fzf#vim#default_layout))
 endfunction
 command! -nargs=+ -complete=dir AgIn call SearchWithAgInDirectory(<f-args>)
 " }}}
+"
 set clipboard=unnamed
-
-syntax on
 filetype plugin indent on
 
-" For Neovim 0.1.3 and 0.1.4
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-" Or if you have Neovim >= 0.1.5
-" if (has("termguicolors"))
-"  set termguicolors
-" endif
+if (has("termguicolors"))
+ set termguicolors
+endif
 
 " Theme
 syntax enable
+" colorscheme OceanicNext
 set background=dark
-colorscheme OceanicNext
-" common
+colorscheme gruvbox
+hi vertsplit ctermfg=238 ctermbg=235
+hi LineNr ctermfg=237
+hi StatusLine ctermfg=235 ctermbg=245
+hi StatusLineNC ctermfg=235 ctermbg=237
+hi Search ctermbg=58 ctermfg=15
+hi Default ctermfg=1
+hi clear SignColumn
+hi SignColumn ctermbg=235
+hi GitGutterAdd ctermbg=235 ctermfg=245
+hi GitGutterChange ctermbg=235 ctermfg=245
+hi GitGutterDelete ctermbg=235 ctermfg=245
+hi GitGutterChangeDelete ctermbg=235 ctermfg=245
+hi EndOfBuffer ctermfg=237 ctermbg=235
 
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+set statusline=%=&P\ %f\ %m
+set fillchars=vert:\ ,stl:\ ,stlnc:\
+set laststatus=2
+set noshowmode
 
 set nobackup
 set nowritebackup
@@ -243,23 +324,17 @@ set guicursor+=i-ci:ver25-Cursor
 set guicursor+=r-cr:hor20-Cursor
 set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
-" display simple options as console text
-set guioptions=c
 
 " show/hide current line highlight
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
 autocmd BufNewFile,BufRead *.svg set filetype=xml
 autocmd BufNewFile,BufRead .babelrc set filetype=json
 autocmd BufNewFile,BufRead .jshintrc set filetype=json
 autocmd BufNewFile,BufRead .eslintrc set filetype=json
+autocmd BufNewFile,BufRead .tern-project filetype=json
 autocmd BufNewFile,BufRead *.es6 set filetype=javascript
 
 
 set magic " Set magic on, for regex
-
-" key bindings
-
 
 " jump to eol in insert mode with C-]
 inoremap <C-]> <End>
@@ -268,12 +343,10 @@ inoremap <C-]> <End>
 map <leader>l :ll<CR>
 
 " indent guides
-if has("gui_running")
-    let g:indent_guides_enable_on_vim_startup = 1
-    let g:indent_guides_color_change_percent = 3
-endif
-
-let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_list_height = 2
+let g:neomake_open_list = 2
+let g:neomake_javascript_eslint_exe = '/home/kmiasko/.nvm/versions/node/v7.4.0/bin/eslint_d'
+let g:neomake_javascript_enabled_makers = ['eslint_d']
 let g:neomake_scss_enabled_makers = ['sasslint']
 
 nmap <Leader><Space>o :lopen<CR>      " open location window
@@ -287,11 +360,6 @@ autocmd! BufWritePost * Neomake
 " emmet
 let g:user_emmet_leader_key='<C-e>'
 
-let g:UltiSnipsSnippetsDir = "~/vim_config/snipps/"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 nnoremap <C-left> :vertical resize +5<cr>
@@ -301,7 +369,7 @@ nnoremap <C-down> :resize -5<cr>
 nnoremap <silent> <right> :bnext<cr>
 nnoremap <silent> <left> :bprev<cr>
 
-let g:used_javascript_libs = 'jquery,react,handlebars,underscore,ramda'
+let g:used_javascript_libs = 'react,underscore,ramda,jasmine,chai'
 
 inoremap jk <ESC>
 
@@ -312,15 +380,73 @@ autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=
 set relativenumber
 
 let g:indentLine_noConcealCursor=""
-" let g:gruvbox_invert_selection = 0
-" let g:gruvbox_italic = 1
-" let g:gruvbox_contrast_dark = 'soft'
 
-let tern#is_show_argument_hints_enabled=0
-let g:tern_request_timeout=1
-let g:tern_show_signature_in_pum=0
-let g:deoplete#enable_at_startup=1
-let g:tern_show_argument_hints=0
+"Add extra filetypes
+let g:tern#filetypes = [
+      \ 'jsx',
+      \ 'javascript.jsx',
+      \ 'javascript',
+      \ 'js'
+      \ ]
+
+autocmd FileType javascript set formatprg=prettier\ --stdin
 
 set fileignorecase
 set wildignorecase
+
+set nofoldenable    " disable folding
+map <up> <nop>
+map <down> <nop>
+imap <up> <nop>
+imap <down> <nop>
+nnoremap <leader><Space> :nohlsearch<Bar>:echo<CR>
+
+set synmaxcol=180
+
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>go :Gread<CR>
+nnoremap <Leader>gR :Gremove<CR>
+nnoremap <Leader>gm :Gmove<Space>
+nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gB :Gbrowse<CR>
+nnoremap <Leader>gp :Git! push<CR>
+nnoremap <Leader>gP :Git! pull<CR>
+nnoremap <Leader>gi :Git!<Space>
+nnoremap <Leader>ge :Gedit<CR>
+nnoremap <Leader>gE :Gedit<Space>
+nnoremap <Leader>gt :!tig<CR>:redraw!<CR>
+nnoremap <Leader>gS :exe "silent !shipit"<CR>:redraw!<CR>
+nnoremap <Leader>ggc :silent! Ggrep -i<Space>
+noremap <Leader>du :diffupdate<CR>
+
+if !exists(":Gdiffoff")
+    command Gdiffoff diffoff | q | Gedit
+endif
+noremap <Leader>dq :Gdiffoff<CR>
+
+set nocursorline
+set lazyredraw
+
+call vimfiler#custom#profile('default', 'context', {
+      \ 'explorer' : 1,
+      \ 'winwidth' : 35,
+      \ 'winminwidth' : 30,
+      \ 'toggle' : 1,
+      \ 'columns' : 'type',
+      \ 'auto_expand': 1,
+      \ 'direction' : 'topleft',
+      \ 'parent': 0,
+      \ 'explorer_columns' : 'type',
+      \ 'status' : 1,
+      \ 'safe' : 0,
+      \ 'split' : 1,
+      \ 'hidden': 1,
+      \ 'no_quit' : 1,
+      \ 'force_hide' : 0,
+      \ })
+
+nmap <F8> :TagbarToggle<CR>
+
